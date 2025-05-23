@@ -222,6 +222,10 @@
                 <p class="text-sm text-neutral-600 mb-4">Describe your Google Maps Platform use case below, and our AI advisor will suggest relevant APIs and tailored cost optimization strategies.</p>
                 <div class="space-y-4">
                     <div>
+                        <label for="geminiApiKeyInput" class="block text-sm font-medium text-neutral-700">Your Gemini API Key:</label>
+                        <input type="password" id="geminiApiKeyInput" class="mt-1 block w-full rounded-md border-stone-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 sm:text-sm p-2" placeholder="Enter your Gemini API Key here">
+                    </div>
+                    <div>
                         <label for="useCaseInput" class="block text-sm font-medium text-neutral-700">Your Use Case Description:</label>
                         <textarea id="useCaseInput" rows="5" class="mt-1 block w-full rounded-md border-stone-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 sm:text-sm p-2" placeholder="e.g., 'I'm building a ride-sharing app that needs real-time driver tracking and route planning.'"></textarea>
                     </div>
@@ -604,6 +608,7 @@
         });
 
         // LLM Integration for Optimization Advisor
+        const geminiApiKeyInput = document.getElementById('geminiApiKeyInput');
         const useCaseInput = document.getElementById('useCaseInput');
         const getOptimizationIdeasButton = document.getElementById('getOptimizationIdeasButton');
         const optimizationIdeasResult = document.getElementById('optimizationIdeasResult');
@@ -612,6 +617,14 @@
 
         getOptimizationIdeasButton.addEventListener('click', async () => {
             const userUseCase = useCaseInput.value.trim();
+            const geminiApiKey = geminiApiKeyInput.value.trim();
+
+            if (!geminiApiKey) {
+                ideasContent.innerHTML = '<p class="text-red-500">Please enter your Gemini API Key.</p>';
+                optimizationIdeasResult.classList.remove('hidden');
+                return;
+            }
+
             if (!userUseCase) {
                 ideasContent.innerHTML = '<p class="text-red-500">Please describe your use case to get suggestions.</p>';
                 optimizationIdeasResult.classList.remove('hidden');
@@ -643,8 +656,7 @@
                 let chatHistory = [];
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
                 const payload = { contents: chatHistory };
-                const apiKey = ""; // Canvas will provide this at runtime
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiApiKey}`;
 
                 const response = await fetch(apiUrl, {
                     method: 'POST',
