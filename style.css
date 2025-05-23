@@ -1,0 +1,48 @@
+ body {
+     font-family: 'Inter', sans-serif;
+ }
+
+ @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+ .chart-container {
+     position: relative;
+     width: 100%;
+     max-width: 600px;
+     /* Max width for chart readability */
+     margin-left: auto;
+     margin-right: auto;
+     height: 300px;
+     /* Base height */
+     max-height: 400px;
+     /* Max height to prevent overflow */
+ }
+
+ @media (min-width: 768px) {
+     .chart-container {
+         height: 350px;
+     }
+ }
+
+ .nav-link.active {
+     color: #b45309;
+     /* darker amber for active link */
+     font-weight: 600;
+     border-bottom: 2px solid #b45309;
+ }
+
+ .table-sortable th:hover {
+     cursor: pointer;
+     background-color: #fef3c7;
+     /* light amber hover */
+ }
+
+ .table-sortable th .sort-arrow {
+     display: inline-block;
+     margin-left: 5px;
+     opacity: 0.5;
+ }
+
+ .table-sortable th .sort-arrow.asc,
+ .table-sortable th .sort-arrow.desc {
+     opacity: 1;
+ }
